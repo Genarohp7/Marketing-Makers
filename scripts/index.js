@@ -11,20 +11,44 @@ if (yearSpan) {
 }
 
 // ==========================
-// NAV: toggle hamburguesa
+// NAV: toggle hamburguesa (arreglado)
 // ==========================
 const navToggle = $(".nav__toggle");
 const navMenu = $(".nav__menu");
+const mq = window.matchMedia("(max-width: 1023px)");
+
+function collapseForMobile() {
+  if (!navMenu) return;
+  if (mq.matches) {
+    navMenu.classList.remove("is-open");
+    navMenu.style.maxHeight = "0px";
+    navToggle?.setAttribute("aria-expanded", "false");
+  } else {
+    // Desktop intacto
+    navMenu.style.maxHeight = "";
+    navMenu.classList.remove("is-open");
+    navToggle?.removeAttribute("aria-expanded");
+  }
+}
+collapseForMobile();
+mq.addEventListener
+  ? mq.addEventListener("change", collapseForMobile)
+  : mq.addListener(collapseForMobile);
 
 if (navToggle && navMenu) {
   navToggle.addEventListener("click", () => {
-    navMenu.classList.toggle("is-open");
+    const isOpen = navMenu.classList.toggle("is-open");
+    navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
+    // Altura dinámica para que no se corte si agregas más items
+    navMenu.style.maxHeight = isOpen ? `${navMenu.scrollHeight}px` : "0px";
   });
 
-  // Cerrar menú al hacer clic en un enlace
+  // Cerrar al elegir una opción
   navMenu.querySelectorAll(".nav__btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       navMenu.classList.remove("is-open");
+      navMenu.style.maxHeight = "0px";
+      navToggle.setAttribute("aria-expanded", "false");
     });
   });
 }

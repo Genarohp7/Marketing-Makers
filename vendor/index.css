@@ -7,7 +7,7 @@
   --white: #ffffff;
   --black: #111111;
   --gray: #f4f4f6;
-  --shadow: 0 6px 16px rgba(0,0,0,.15);
+  --shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 *,
@@ -47,7 +47,7 @@ img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1rem .5rem;
+  padding: 1rem 0.5rem;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -76,16 +76,16 @@ img {
   background: transparent;
   color: var(--white);
   font-weight: 600;
-  margin: .3rem 0;
-  padding: .5rem .3rem;
+  margin: 0.3rem 0;
+  padding: 0.5rem 0.3rem;
   cursor: pointer;
   border-radius: 8px;
-  transition: background .2s;
+  transition: background 0.2s;
   width: 100%;
 }
 
 .nav__btn:hover {
-  background: rgba(255,255,255,.15);
+  background: rgba(255, 255, 255, 0.15);
 }
 
 .nav__btn.is-active {
@@ -123,7 +123,7 @@ img {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: .8rem;
+  gap: 0.8rem;
   position: sticky;
   top: 0;
   height: 100vh;
@@ -138,7 +138,7 @@ img {
   display: grid;
   place-items: center;
   box-shadow: var(--shadow);
-  font-size: .8rem;
+  font-size: 0.8rem;
   text-decoration: none;
 }
 
@@ -153,7 +153,11 @@ img {
 }
 
 .hero {
-  background: linear-gradient(160deg, var(--purple) 0%, var(--purple-dark) 100%);
+  background: linear-gradient(
+    160deg,
+    var(--purple) 0%,
+    var(--purple-dark) 100%
+  );
   color: var(--white);
 }
 
@@ -176,13 +180,13 @@ img {
 
 .hero__cta {
   display: inline-block;
-  padding: .8rem 1.2rem;
+  padding: 0.8rem 1.2rem;
   border-radius: 10px;
   border: 2px solid var(--white);
   color: var(--white);
   font-weight: 700;
   text-decoration: none;
-  transition: all .2s;
+  transition: all 0.2s;
 }
 
 .hero__cta:hover {
@@ -218,7 +222,7 @@ img {
 .about__kpi {
   background: var(--gray);
   border-radius: 10px;
-  padding: .8rem;
+  padding: 0.8rem;
   text-align: center;
 }
 
@@ -242,7 +246,7 @@ img {
   border-radius: 12px;
   box-shadow: var(--shadow);
   overflow: hidden;
-  transition: transform .2s;
+  transition: transform 0.2s;
 }
 
 .service:hover {
@@ -276,7 +280,7 @@ img {
 
 .clients__track {
   display: flex;
-  transition: transform .5s ease;
+  transition: transform 0.5s ease;
 }
 
 .clients__slide {
@@ -295,8 +299,8 @@ img {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: .8rem;
-  background: rgba(0,0,0,.6);
+  padding: 0.8rem;
+  background: rgba(0, 0, 0, 0.6);
   color: var(--white);
   font-weight: 600;
 }
@@ -323,7 +327,7 @@ img {
 
 .clients__dots {
   display: flex;
-  gap: .6rem;
+  gap: 0.6rem;
   justify-content: center;
   margin-top: 1rem;
 }
@@ -351,7 +355,7 @@ img {
 .contact__form {
   display: flex;
   flex-direction: column;
-  gap: .8rem;
+  gap: 0.8rem;
   background: var(--gray);
   padding: 1rem;
   border-radius: 12px;
@@ -359,7 +363,7 @@ img {
 
 .contact__input,
 .contact__textarea {
-  padding: .6rem;
+  padding: 0.6rem;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
@@ -368,7 +372,7 @@ img {
   background: var(--purple);
   color: var(--white);
   border: none;
-  padding: .8rem;
+  padding: 0.8rem;
   border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
@@ -388,7 +392,7 @@ img {
 .footer {
   margin-top: 2rem;
   text-align: center;
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: #666;
 }
 
@@ -407,7 +411,7 @@ img {
     justify-content: space-between;
     align-items: center;
     height: auto;
-    padding: .5rem 1rem;
+    padding: 0.5rem 1rem;
     position: fixed;
     top: 0;
     left: 0;
@@ -435,7 +439,7 @@ img {
     padding: 1rem 0;
     max-height: 0;
     overflow: hidden;
-    transition: max-height .3s ease-in-out;
+    transition: max-height 0.3s ease-in-out;
   }
 
   .nav__menu.is-open {
@@ -446,7 +450,7 @@ img {
     position: static;
     flex-direction: row;
     justify-content: center;
-    margin: .5rem 0;
+    margin: 0.5rem 0;
     height: auto;
   }
 
@@ -463,6 +467,17 @@ img {
 
 /* Mobile */
 @media (max-width: 767px) {
+  .nav {
+    padding: 0.5rem 1rem; /* agrega padding lateral uniforme */
+  }
+
+  .nav__toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 1.4rem;
+    margin: 0; /* elimina cualquier margen extraño */
+  }
+
   .services__grid {
     grid-template-columns: 1fr;
   }
