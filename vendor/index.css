@@ -1,0 +1,473 @@
+/* ==========================
+   VARIABLES Y RESET
+========================== */
+:root {
+  --purple: #8a1671;
+  --purple-dark: #730f5d;
+  --white: #ffffff;
+  --black: #111111;
+  --gray: #f4f4f6;
+  --shadow: 0 6px 16px rgba(0,0,0,.15);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  background: var(--gray);
+  color: var(--black);
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* ==========================
+   LAYOUT GENERAL
+========================== */
+.page {
+  display: grid;
+  grid-template-columns: 90px 1fr 60px;
+  min-height: 100vh;
+}
+
+/* ==========================
+   NAV
+========================== */
+.nav {
+  background: var(--purple);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem .5rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 1000;
+}
+
+.nav__brand {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--white);
+  display: grid;
+  place-items: center;
+  margin-bottom: 1rem;
+}
+
+.nav__logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav__btn {
+  border: none;
+  background: transparent;
+  color: var(--white);
+  font-weight: 600;
+  margin: .3rem 0;
+  padding: .5rem .3rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background .2s;
+  width: 100%;
+}
+
+.nav__btn:hover {
+  background: rgba(255,255,255,.15);
+}
+
+.nav__btn.is-active {
+  background: var(--white);
+  color: var(--purple);
+}
+
+.nav__spacer {
+  flex: 1;
+}
+
+/* Botón hamburguesa (oculto en desktop) */
+.nav__toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--white);
+  font-size: 1.8rem;
+  cursor: pointer;
+}
+
+/* Contenedor del menú (para hamburguesa) */
+.nav__menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+/* ==========================
+   SOCIAL
+========================== */
+.social {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .8rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.social__link {
+  background: var(--white);
+  color: var(--purple);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow);
+  font-size: .8rem;
+  text-decoration: none;
+}
+
+/* ==========================
+   SECCIONES
+========================== */
+.section {
+  min-height: 90vh;
+  padding: 4rem 6vw;
+  display: grid;
+  align-items: center;
+}
+
+.hero {
+  background: linear-gradient(160deg, var(--purple) 0%, var(--purple-dark) 100%);
+  color: var(--white);
+}
+
+.hero__container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.hero__title {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0 0 1rem;
+}
+
+.hero__description {
+  max-width: 500px;
+  margin: 0 0 1.5rem;
+}
+
+.hero__cta {
+  display: inline-block;
+  padding: .8rem 1.2rem;
+  border-radius: 10px;
+  border: 2px solid var(--white);
+  color: var(--white);
+  font-weight: 700;
+  text-decoration: none;
+  transition: all .2s;
+}
+
+.hero__cta:hover {
+  background: var(--white);
+  color: var(--purple);
+}
+
+.hero__card {
+  background: var(--white);
+  color: var(--black);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+
+/* ==========================
+   ABOUT
+========================== */
+.about__container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+.about__kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.about__kpi {
+  background: var(--gray);
+  border-radius: 10px;
+  padding: .8rem;
+  text-align: center;
+}
+
+.about__kpi-value {
+  color: var(--purple);
+  font-size: 1.4rem;
+}
+
+/* ==========================
+   SERVICES
+========================== */
+.services__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.service {
+  background: var(--white);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  transition: transform .2s;
+}
+
+.service:hover {
+  transform: translateY(-5px);
+}
+
+.service__img {
+  height: 160px;
+  overflow: hidden;
+}
+
+.service__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.service__body {
+  padding: 1rem;
+}
+
+/* ==========================
+   CLIENTS
+========================== */
+.clients__carousel {
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  position: relative;
+}
+
+.clients__track {
+  display: flex;
+  transition: transform .5s ease;
+}
+
+.clients__slide {
+  min-width: 100%;
+  position: relative;
+}
+
+.clients__image {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.clients__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: .8rem;
+  background: rgba(0,0,0,.6);
+  color: var(--white);
+  font-weight: 600;
+}
+
+.clients__ctrl {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+
+.clients__prev,
+.clients__next {
+  background: var(--white);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.clients__dots {
+  display: flex;
+  gap: .6rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.clients__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ccc;
+}
+
+.clients__dot.is-active {
+  background: var(--purple);
+}
+
+/* ==========================
+   CONTACT
+========================== */
+.contact__container {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 2rem;
+}
+
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: .8rem;
+  background: var(--gray);
+  padding: 1rem;
+  border-radius: 12px;
+}
+
+.contact__input,
+.contact__textarea {
+  padding: .6rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.contact__send {
+  background: var(--purple);
+  color: var(--white);
+  border: none;
+  padding: .8rem;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.contact__send:hover {
+  background: var(--purple-dark);
+}
+
+.contact__map-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.footer {
+  margin-top: 2rem;
+  text-align: center;
+  font-size: .9rem;
+  color: #666;
+}
+
+/* ==========================
+   RESPONSIVE
+========================== */
+
+/* Tablet */
+@media (max-width: 1023px) {
+  .page {
+    grid-template-columns: 1fr; /* barra lateral desaparece */
+  }
+
+  .nav {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: auto;
+    padding: .5rem 1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .nav__brand {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+  }
+
+  .nav__toggle {
+    display: block; /* visible en tablet/móvil */
+  }
+
+  .nav__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--purple);
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height .3s ease-in-out;
+  }
+
+  .nav__menu.is-open {
+    max-height: 500px;
+  }
+
+  .social {
+    position: static;
+    flex-direction: row;
+    justify-content: center;
+    margin: .5rem 0;
+    height: auto;
+  }
+
+  .hero__container,
+  .about__container,
+  .contact__container {
+    grid-template-columns: 1fr;
+  }
+
+  .services__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .services__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .clients__image {
+    height: 200px;
+  }
+}
