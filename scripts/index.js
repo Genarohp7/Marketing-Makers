@@ -11,7 +11,7 @@ if (yearSpan) {
 }
 
 // ==========================
-// NAV: toggle hamburguesa (arreglado)
+// NAV: toggle hamburguesa
 // ==========================
 const navToggle = $(".nav__toggle");
 const navMenu = $(".nav__menu");
@@ -24,7 +24,6 @@ function collapseForMobile() {
     navMenu.style.maxHeight = "0px";
     navToggle?.setAttribute("aria-expanded", "false");
   } else {
-    // Desktop intacto
     navMenu.style.maxHeight = "";
     navMenu.classList.remove("is-open");
     navToggle?.removeAttribute("aria-expanded");
@@ -39,11 +38,9 @@ if (navToggle && navMenu) {
   navToggle.addEventListener("click", () => {
     const isOpen = navMenu.classList.toggle("is-open");
     navToggle.setAttribute("aria-expanded", isOpen ? "true" : "false");
-    // Altura dinámica para que no se corte si agregas más items
     navMenu.style.maxHeight = isOpen ? `${navMenu.scrollHeight}px` : "0px";
   });
 
-  // Cerrar al elegir una opción
   navMenu.querySelectorAll(".nav__btn").forEach((btn) => {
     btn.addEventListener("click", () => {
       navMenu.classList.remove("is-open");
@@ -66,7 +63,6 @@ navButtons.forEach((btn) => {
   });
 });
 
-// activar estado is-active según sección visible
 const sections = ["#hero", "#about", "#services", "#clients", "#contact"].map(
   (id) => $(id)
 );
@@ -104,6 +100,7 @@ const revealObserver = new IntersectionObserver(
   { threshold: 0.2 }
 );
 
+// aplicar a todos los elementos .reveal (incluyendo services__note)
 $$(".reveal").forEach((el) => revealObserver.observe(el));
 
 // ==========================
@@ -120,7 +117,6 @@ $$(".reveal").forEach((el) => revealObserver.observe(el));
   const dotsWrap = $(".clients__dots", root);
   let index = 0;
 
-  // Crear puntitos
   slides.forEach((_, i) => {
     const d = document.createElement("div");
     d.className = "clients__dot" + (i === 0 ? " is-active" : "");
@@ -138,7 +134,6 @@ $$(".reveal").forEach((el) => revealObserver.observe(el));
   prev.addEventListener("click", () => go(index - 1));
   next.addEventListener("click", () => go(index + 1));
 
-  // autoplay
   let auto = setInterval(() => go(index + 1), 5000);
   root.addEventListener("pointerenter", () => clearInterval(auto));
   root.addEventListener("pointerleave", () => {

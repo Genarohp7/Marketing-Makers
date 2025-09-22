@@ -268,6 +268,26 @@ img {
   padding: 1rem;
 }
 
+/* Texto destacado debajo de servicios */
+.services__note {
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  text-align: center;
+  background: linear-gradient(to right, var(--purple), var(--purple-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.9s ease;
+}
+.services__note.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* ==========================
    CLIENTS
 ========================== */
@@ -403,7 +423,7 @@ img {
 /* Tablet */
 @media (max-width: 1023px) {
   .page {
-    grid-template-columns: 1fr; /* barra lateral desaparece */
+    grid-template-columns: 1fr;
   }
 
   .nav {
@@ -425,7 +445,7 @@ img {
   }
 
   .nav__toggle {
-    display: block; /* visible en tablet/móvil */
+    display: block;
   }
 
   .nav__menu {
@@ -468,14 +488,14 @@ img {
 /* Mobile */
 @media (max-width: 767px) {
   .nav {
-    padding: 0.5rem 1rem; /* agrega padding lateral uniforme */
+    padding: 0.5rem 1rem;
   }
 
   .nav__toggle {
     width: 40px;
     height: 40px;
     font-size: 1.4rem;
-    margin: 0; /* elimina cualquier margen extraño */
+    margin: 0;
   }
 
   .services__grid {
