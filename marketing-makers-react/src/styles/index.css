@@ -276,13 +276,23 @@ img {
   line-height: 1.6;
   text-align: center;
   background: linear-gradient(to right, var(--purple), var(--purple-dark));
+
+  /* ✅ estándar (para que el linter deje de llorar) */
+  background-clip: text;
+
+  /* ✅ WebKit (Safari/Chrome) */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+
+  /* ✅ fallback razonable */
+  color: transparent;
+
   font-weight: 500;
   opacity: 0;
   transform: translateY(20px);
   transition: all 0.9s ease;
 }
+
 .services__note.in {
   opacity: 1;
   transform: translateY(0);

@@ -19,7 +19,7 @@ export default function App() {
     if (isMobileOrTablet()) setMenuOpen(false);
   };
 
-  // Ajusta maxHeight dinámico (solo en tablet/móvil) SIN setState aquí
+  // Ajusta maxHeight dinámico (solo en tablet/móvil)
   useEffect(() => {
     const el = menuRef.current;
     if (!el) return;
@@ -54,7 +54,7 @@ export default function App() {
   // ==========================
   // NAV: scroll suave + scroll-spy (React)
   // ==========================
-  const sectionIds = ["hero", "about", "services", "clients", "contact"];
+  const sectionIds = useRef(["hero", "about", "services", "clients", "contact"]);
   const [activeSection, setActiveSection] = useState("hero");
   const sectionRefs = useRef({});
 
@@ -72,7 +72,7 @@ export default function App() {
   };
 
   useEffect(() => {
-    const els = sectionIds
+    const els = sectionIds.current
       .map((id) => sectionRefs.current[id])
       .filter(Boolean);
 
@@ -142,6 +142,7 @@ export default function App() {
           >
             Inicio
           </button>
+
           <button
             className={`nav__btn ${
               activeSection === "about" ? "is-active" : ""
@@ -150,6 +151,7 @@ export default function App() {
           >
             Quiénes somos
           </button>
+
           <button
             className={`nav__btn ${
               activeSection === "services" ? "is-active" : ""
@@ -158,6 +160,7 @@ export default function App() {
           >
             Qué hacemos
           </button>
+
           <button
             className={`nav__btn ${
               activeSection === "clients" ? "is-active" : ""
@@ -166,6 +169,7 @@ export default function App() {
           >
             Clientes
           </button>
+
           <button
             className={`nav__btn ${
               activeSection === "contact" ? "is-active" : ""
@@ -385,7 +389,9 @@ export default function App() {
                     alt="Personas colaborando"
                     className="clients__image"
                   />
-                  <div className="clients__caption">Campaña digital · 4.2x ROAS</div>
+                  <div className="clients__caption">
+                    Campaña digital · 4.2x ROAS
+                  </div>
                 </div>
               </div>
 
