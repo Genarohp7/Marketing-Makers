@@ -27,12 +27,11 @@ export default function App() {
     if (isMobileOrTablet()) {
       el.style.maxHeight = menuOpen ? `${el.scrollHeight}px` : "0px";
     } else {
-      // Desktop: no dependemos de maxHeight
       el.style.maxHeight = "";
     }
   }, [menuOpen]);
 
-  // Cerrar menú al pasar a desktop (evento externo: resize)
+  // Cerrar menú al pasar a desktop
   useEffect(() => {
     const onResize = () => {
       const el = menuRef.current;
@@ -62,9 +61,7 @@ export default function App() {
     const el = sectionRefs.current[id];
     if (!el) return;
 
-    // En tablet/móvil la nav es fixed arriba, así que compensamos altura
     const offset = isMobileOrTablet() ? 80 : 0;
-
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
 
     window.scrollTo({ top, behavior: "smooth" });
@@ -96,6 +93,29 @@ export default function App() {
 
     els.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
+  }, []);
+
+  // ==========================
+  // Animaciones de entrada (.reveal)
+  // ==========================
+  useEffect(() => {
+    const els = Array.from(document.querySelectorAll(".reveal"));
+    if (!els.length) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("in");
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    els.forEach((el) => obs.observe(el));
+    return () => obs.disconnect();
   }, []);
 
   // ==========================
@@ -132,10 +152,7 @@ export default function App() {
         </button>
 
         {/* Menú */}
-        <div
-          ref={menuRef}
-          className={`nav__menu ${menuOpen ? "is-open" : ""}`}
-        >
+        <div ref={menuRef} className={`nav__menu ${menuOpen ? "is-open" : ""}`}>
           <button
             className={`nav__btn ${activeSection === "hero" ? "is-active" : ""}`}
             onClick={() => scrollToSection("hero")}
@@ -236,27 +253,51 @@ export default function App() {
             <div className="about__text">
               <h2 className="about__eyebrow">Quiénes somos</h2>
               <h3 className="about__title">
-                Un equipo híbrido: estrategas, diseñadores y makers.
+                Un equipo pequeño, enfoque grande: estrategia + diseño + ejecución.
               </h3>
+
               <p className="about__description">
-                Una agencia de marketing, que te ayudará a dar una estrategia,
-                solucionar problemas, y adaptarte los retos que continuamente
-                evolucionan en el mercado.
+                Marketing Makers nace para ayudar a negocios reales (los que venden,
+                atienden, resuelven y se ensucian las manos). Trabajamos contigo de
+                forma cercana, con procesos claros y entregables listos para usar.
               </p>
 
-              <div className="about__kpis">
-                <div className="about__kpi">
-                  <b className="about__kpi-value">+120</b>
-                  <div className="about__kpi-label">proyectos</div>
-                </div>
-                <div className="about__kpi">
-                  <b className="about__kpi-value">4.9/5</b>
-                  <div className="about__kpi-label">satisfacción</div>
-                </div>
-                <div className="about__kpi">
-                  <b className="about__kpi-value">+40</b>
-                  <div className="about__kpi-label">pymes impulsadas</div>
-                </div>
+              <div className="about__highlights reveal">
+                <article className="about__highlight">
+                  <h4 className="about__highlight-title">Atención directa</h4>
+                  <p className="about__highlight-text">
+                    Hablas con quien ejecuta. Menos vueltas, más avance y decisiones
+                    rápidas.
+                  </p>
+                </article>
+
+                <article className="about__highlight">
+                  <h4 className="about__highlight-title">Proceso simple</h4>
+                  <p className="about__highlight-text">
+                    Diagnóstico → propuesta → producción → entrega. Sin misterio, sin
+                    promesas mágicas.
+                  </p>
+                </article>
+
+                <article className="about__highlight">
+                  <h4 className="about__highlight-title">Resultados medibles</h4>
+                  <p className="about__highlight-text">
+                    Definimos objetivos claros y medimos lo esencial para mejorar cada
+                    iteración.
+                  </p>
+                </article>
+              </div>
+
+              <div className="about__cta reveal">
+                <button
+                  className="about__cta-btn"
+                  onClick={() => scrollToSection("contact")}
+                >
+                  Cuéntanos tu proyecto
+                </button>
+                <p className="about__cta-note">
+                  Primera llamada para entender tu necesidad (sin compromiso).
+                </p>
               </div>
             </div>
 
@@ -278,9 +319,7 @@ export default function App() {
         >
           <div className="services__container">
             <h2 className="services__eyebrow">Qué hacemos</h2>
-            <h3 className="services__title">
-              De la estrategia a la pieza final.
-            </h3>
+            <h3 className="services__title">De la estrategia a la pieza final.</h3>
 
             <div className="services__grid">
               <article className="service">
@@ -294,10 +333,10 @@ export default function App() {
                 <div className="service__body">
                   <h4 className="service__title">Marketing Digital</h4>
                   <p className="service__description">
-                    Contamos con un equipo multidisciplinario, que podemos
-                    ayudar en llevar tu negocio al siguiente nivel, desde
-                    desarrolladoras, organización de eventos, diseño digital e
-                    impreso, redes sociales, desarrollo web, entre otros.
+                    Contamos con un equipo multidisciplinario, que podemos ayudar en
+                    llevar tu negocio al siguiente nivel, desde desarrolladoras,
+                    organización de eventos, diseño digital e impreso, redes sociales,
+                    desarrollo web, entre otros.
                   </p>
                 </div>
               </article>
@@ -313,9 +352,9 @@ export default function App() {
                 <div className="service__body">
                   <h4 className="service__title">Branding</h4>
                   <p className="service__description">
-                    Algunos servicios ofrecen métricas, análisis, datos y
-                    reportes. Con el fin de informarte si tus campañas son
-                    efectivas y mejorar siempre la planeación de futuras.
+                    Algunos servicios ofrecen métricas, análisis, datos y reportes. Con
+                    el fin de informarte si tus campañas son efectivas y mejorar siempre
+                    la planeación de futuras.
                   </p>
                 </div>
               </article>
@@ -331,20 +370,20 @@ export default function App() {
                 <div className="service__body">
                   <h4 className="service__title">Impresos &amp; Producción</h4>
                   <p className="service__description">
-                    Muchos aspectos pueden ser importantes para lograr impacto y
-                    conexión con tu cliente, es importante conocerlos, para esto
-                    haremos una investigación contigo para conocerlo, y una vez
-                    detectado el mejor canal, ¡lanzamos la propuesta!
+                    Muchos aspectos pueden ser importantes para lograr impacto y conexión
+                    con tu cliente, es importante conocerlos, para esto haremos una
+                    investigación contigo para conocerlo, y una vez detectado el mejor
+                    canal, ¡lanzamos la propuesta!
                   </p>
                 </div>
               </article>
             </div>
 
             <p className="services__note reveal">
-              Somos una agencia con varios niveles de apoyo, podemos hacerlo sin
-              importar el tamaño de tu negocio, una persona física con actividad
-              empresarial o comercial, emprendedor, freelancer, doctor, micro,
-              pequeño y mediano negocio, hasta proyectos de gran escala.
+              Somos una agencia con varios niveles de apoyo, podemos hacerlo sin importar
+              el tamaño de tu negocio, una persona física con actividad empresarial o
+              comercial, emprendedor, freelancer, doctor, micro, pequeño y mediano
+              negocio, hasta proyectos de gran escala.
             </p>
           </div>
         </section>
@@ -378,9 +417,7 @@ export default function App() {
                     alt="Oficina creativa"
                     className="clients__image"
                   />
-                  <div className="clients__caption">
-                    Rebranding completo · Kit de marca
-                  </div>
+                  <div className="clients__caption">Rebranding completo · Kit de marca</div>
                 </div>
 
                 <div className="clients__slide slide">
@@ -389,9 +426,7 @@ export default function App() {
                     alt="Personas colaborando"
                     className="clients__image"
                   />
-                  <div className="clients__caption">
-                    Campaña digital · 4.2x ROAS
-                  </div>
+                  <div className="clients__caption">Campaña digital · 4.2x ROAS</div>
                 </div>
               </div>
 
@@ -414,20 +449,13 @@ export default function App() {
           <div className="contact__container">
             <div className="contact__form-wrapper">
               <h2 className="contact__eyebrow">Contacto</h2>
-              <h3 className="contact__title">
-                Hagamos algo que valga la pena contar.
-              </h3>
+              <h3 className="contact__title">Hagamos algo que valga la pena contar.</h3>
 
               <form id="contactForm" className="contact__form">
                 <label htmlFor="name" className="contact__label">
                   Nombre
                 </label>
-                <input
-                  id="name"
-                  name="name"
-                  required
-                  className="contact__input"
-                />
+                <input id="name" name="name" required className="contact__input" />
 
                 <label htmlFor="email" className="contact__label">
                   Email
