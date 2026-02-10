@@ -540,33 +540,52 @@ img {
 
 .about__highlight {
   position: relative;
-  background: rgba(255, 255, 255, 0.88);
   border-radius: 16px;
   padding: 1.1rem 1.1rem 1.05rem;
-  box-shadow: var(--shadow);
   overflow: hidden;
+  box-shadow: var(--shadow);
   transform: translateY(0);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
+  background: rgba(255, 255, 255, 0.88);
 }
 
+/* ✅ borde premium SIN mask (cero warnings) */
 .about__highlight::before {
   content: "";
   position: absolute;
   inset: 0;
   border-radius: 16px;
-  padding: 1px;
+  padding: 1px; /* grosor del borde */
+
   background: linear-gradient(
     135deg,
     rgba(148, 27, 128, 0.55),
     rgba(17, 17, 17, 0.12),
     rgba(148, 27, 128, 0.25)
   );
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
+
+  /* la magia del borde: recorta el centro */
+  -webkit-mask: none;
+  mask: none;
+  background-clip: padding-box, border-box;
   pointer-events: none;
+
+  /* hacemos “hueco” con doble background */
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88))
+      padding-box,
+    linear-gradient(
+        135deg,
+        rgba(148, 27, 128, 0.55),
+        rgba(17, 17, 17, 0.12),
+        rgba(148, 27, 128, 0.25)
+      )
+      border-box;
+
+  border: 1px solid transparent;
 }
 
+/* Brillo decorativo */
 .about__highlight::after {
   content: "";
   position: absolute;
