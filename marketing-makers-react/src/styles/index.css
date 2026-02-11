@@ -321,7 +321,7 @@ img {
 
 /* Contenedor cuadrado real para la imagen */
 .clients__image {
-  width: min(520px, 92%);
+  width: min(320px, 92%); /* ✅ AJUSTE: coherente con max-width del carrusel */
   aspect-ratio: 1 / 1; /* ✅ cuadrado */
   height: auto;
 
@@ -350,7 +350,7 @@ img {
 /* Botones: centrados al marco */
 .clients__ctrl {
   position: absolute;
-  top: 70%;
+  top: 50%; /* ✅ AJUSTE: centrado estable */
   left: -1px;
   right: -1px;
   display: flex;
@@ -535,8 +535,8 @@ img {
     grid-template-columns: 1fr;
   }
 
-  /* ✅ NUEVO: carrusel a full en móvil + altura controlada */
- .clients__carousel {
+  /* ✅ carrusel a full en móvil + altura controlada */
+  .clients__carousel {
     max-width: 100%;
     border-radius: 14px;
   }
@@ -546,7 +546,7 @@ img {
   }
 
   .clients__image {
-    width: min(360px, 92%);
+    width: min(320px, 92%); /* ✅ coherente también en móvil */
   }
 
   .clients__caption {
@@ -579,6 +579,7 @@ img {
 }
 
 /* Cards de highlights */
+/* Cards de highlights */
 .about__highlights {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -591,49 +592,29 @@ img {
   border-radius: 16px;
   padding: 1.1rem 1.1rem 1.05rem;
   overflow: hidden;
+
+  /* ✅ borde premium sin pseudo-elementos que tapen texto */
+  border: 1px solid transparent;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.92)) padding-box,
+    linear-gradient(
+      135deg,
+      rgba(148, 27, 128, 0.55),
+      rgba(17, 17, 17, 0.12),
+      rgba(148, 27, 128, 0.25)
+    ) border-box;
+
   box-shadow: var(--shadow);
   transform: translateY(0);
   transition: transform 0.22s ease, box-shadow 0.22s ease;
-  background: rgba(255, 255, 255, 0.88);
 }
 
-/* ✅ borde premium SIN mask (cero warnings) */
+/* ❌ apaga el pseudo borde anterior (era el culpable de la opacidad) */
 .about__highlight::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 16px;
-  padding: 1px; /* grosor del borde */
-
-  background: linear-gradient(
-    135deg,
-    rgba(148, 27, 128, 0.55),
-    rgba(17, 17, 17, 0.12),
-    rgba(148, 27, 128, 0.25)
-  );
-
-  /* la magia del borde: recorta el centro */
-  -webkit-mask: none;
-  mask: none;
-  background-clip: padding-box, border-box;
-  pointer-events: none;
-
-  /* hacemos “hueco” con doble background */
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.88))
-      padding-box,
-    linear-gradient(
-        135deg,
-        rgba(148, 27, 128, 0.55),
-        rgba(17, 17, 17, 0.12),
-        rgba(148, 27, 128, 0.25)
-      )
-      border-box;
-
-  border: 1px solid transparent;
+  content: none;
 }
 
-/* Brillo decorativo */
+/* Brillo decorativo (este sí está ok porque no tapa texto) */
 .about__highlight::after {
   content: "";
   position: absolute;
@@ -643,7 +624,7 @@ img {
   top: -140px;
   background: radial-gradient(
     circle,
-    rgba(148, 27, 128, 0.25),
+    rgba(148, 27, 128, 0.18),
     rgba(148, 27, 128, 0) 70%
   );
   pointer-events: none;
@@ -663,8 +644,9 @@ img {
 
 .about__highlight-text {
   margin: 0;
-  color: rgba(17, 17, 17, 0.8);
+  color: rgba(17, 17, 17, 0.82);
 }
+
 
 /* CTA pro */
 .about__cta {
@@ -732,7 +714,6 @@ img {
   font-weight: 500;
 }
 
-/* Responsive solo de esta sección */
 @media (max-width: 1023px) {
   .about__highlights {
     grid-template-columns: 1fr;
