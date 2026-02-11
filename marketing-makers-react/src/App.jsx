@@ -1,4 +1,11 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+// ✅ Importa tus imágenes locales (tú solo cambia nombres/extensiones)
+import client1 from "../public/image/Clientes/Altradent.png";
+import client2 from "../public/image/Clientes/faster-fitness.png";
+import client3 from "../public/image/Clientes/kelom.png";
+import client4 from "../public/image/Clientes/natural_force.png";
+import client5 from "../public/image/Clientes/republicaAltradent.png";
 
 export default function App() {
   // ==========================
@@ -51,7 +58,7 @@ export default function App() {
   }, [menuOpen]);
 
   // ==========================
-  // NAV: scroll suave + scroll-spy (React)
+  // Scroll suave + scroll-spy
   // ==========================
   const sectionIds = useRef(["hero", "about", "services", "clients", "contact"]);
   const [activeSection, setActiveSection] = useState("hero");
@@ -81,9 +88,7 @@ export default function App() {
           .filter((e) => e.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
-        if (visible?.target?.id) {
-          setActiveSection(visible.target.id);
-        }
+        if (visible?.target?.id) setActiveSection(visible.target.id);
       },
       {
         rootMargin: "-40% 0px -50% 0px",
@@ -96,7 +101,7 @@ export default function App() {
   }, []);
 
   // ==========================
-  // Animaciones de entrada (.reveal)
+  // Reveal animations (.reveal)
   // ==========================
   useEffect(() => {
     const els = Array.from(document.querySelectorAll(".reveal"));
@@ -117,6 +122,61 @@ export default function App() {
     els.forEach((el) => obs.observe(el));
     return () => obs.disconnect();
   }, []);
+
+  // ==========================
+  // Carrusel de clientes (React)
+  // ==========================
+  const clientSlides = useMemo(
+    () => [
+      {
+        src: client1,
+        alt: "Proyecto 1",
+        caption: "Proyecto · Lanzamiento / Contenido",
+      },
+      {
+        src: client2,
+        alt: "Proyecto 2",
+        caption: "Proyecto · Branding / Identidad",
+      },
+      {
+        src: client3,
+        alt: "Proyecto 3",
+        caption: "Proyecto · Campaña digital",
+      },
+      {
+        src: client4,
+        alt: "Proyecto 4",
+        caption: "Proyecto · Impresos / Producción",
+      },
+      {
+        src: client5,
+        alt: "Proyecto 5",
+        caption: "Proyecto · Redes / Community",
+      },
+    ],
+    []
+  );
+
+  const [clientIndex, setClientIndex] = useState(0);
+
+  const goClient = (i) => {
+    const len = clientSlides.length;
+    setClientIndex(((i % len) + len) % len);
+  };
+
+  // Opcional: autoplay (pausa al hover)
+  const autoRef = useRef(null);
+  const [pauseAuto, setPauseAuto] = useState(false);
+
+  useEffect(() => {
+    if (pauseAuto) return;
+
+    autoRef.current = setInterval(() => {
+      setClientIndex((v) => (v + 1) % clientSlides.length);
+    }, 5000);
+
+    return () => clearInterval(autoRef.current);
+  }, [pauseAuto, clientSlides.length]);
 
   // ==========================
   // Render
@@ -141,7 +201,7 @@ export default function App() {
           </a>
         </div>
 
-        {/* Botón hamburguesa (solo visible en tablet/móvil por CSS) */}
+        {/* Botón hamburguesa */}
         <button
           className="nav__toggle"
           aria-label="Abrir menú"
@@ -243,7 +303,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Quiénes somos */}
+        {/* About */}
         <section
           id="about"
           className="about section"
@@ -262,7 +322,7 @@ export default function App() {
                 forma cercana, con procesos claros y entregables listos para usar.
               </p>
 
-              <div className="about__highlights reveal">
+              <div className="about__highlights">
                 <article className="about__highlight">
                   <h4 className="about__highlight-title">Atención directa</h4>
                   <p className="about__highlight-text">
@@ -288,7 +348,7 @@ export default function App() {
                 </article>
               </div>
 
-              <div className="about__cta reveal">
+              <div className="about__cta">
                 <button
                   className="about__cta-btn"
                   onClick={() => scrollToSection("contact")}
@@ -311,7 +371,7 @@ export default function App() {
           </div>
         </section>
 
-        {/* Qué hacemos */}
+        {/* Services */}
         <section
           id="services"
           className="services section"
@@ -333,10 +393,7 @@ export default function App() {
                 <div className="service__body">
                   <h4 className="service__title">Marketing Digital</h4>
                   <p className="service__description">
-                    Contamos con un equipo multidisciplinario, que podemos ayudar en
-                    llevar tu negocio al siguiente nivel, desde desarrolladoras,
-                    organización de eventos, diseño digital e impreso, redes sociales,
-                    desarrollo web, entre otros.
+                    Contamos con un equipo multidisciplinario, que podemos ayudar en llevar tu negocio al siguiente nivel, desde desarrolladoras, organización de eventos, diseño digital e impreso, redes sociales, desarrollo web, entre otros.
                   </p>
                 </div>
               </article>
@@ -352,9 +409,7 @@ export default function App() {
                 <div className="service__body">
                   <h4 className="service__title">Branding</h4>
                   <p className="service__description">
-                    Algunos servicios ofrecen métricas, análisis, datos y reportes. Con
-                    el fin de informarte si tus campañas son efectivas y mejorar siempre
-                    la planeación de futuras.
+                    Algunos servicios ofrecen métricas, análisis, datos y reportes. Con el fin de informarte si tus campañas son efectivas y mejorar siempre la planeación de futuras.
                   </p>
                 </div>
               </article>
@@ -370,25 +425,19 @@ export default function App() {
                 <div className="service__body">
                   <h4 className="service__title">Impresos &amp; Producción</h4>
                   <p className="service__description">
-                    Muchos aspectos pueden ser importantes para lograr impacto y conexión
-                    con tu cliente, es importante conocerlos, para esto haremos una
-                    investigación contigo para conocerlo, y una vez detectado el mejor
-                    canal, ¡lanzamos la propuesta!
+                    Muchos aspectos pueden ser importantes para lograr impacto y conexión con tu cliente, es importante conocerlos, para esto haremos una investigación contigo para conocerlo, y una vez detectado el mejor canal, ¡lanzamos la propuesta!
                   </p>
                 </div>
               </article>
             </div>
 
             <p className="services__note reveal">
-              Somos una agencia con varios niveles de apoyo, podemos hacerlo sin importar
-              el tamaño de tu negocio, una persona física con actividad empresarial o
-              comercial, emprendedor, freelancer, doctor, micro, pequeño y mediano
-              negocio, hasta proyectos de gran escala.
+              Somos una agencia con varios niveles de apoyo, podemos hacerlo sin importar el tamaño de tu negocio, una persona física con actividad empresarial o comercial, emprendedor, freelancer, doctor, micro, pequeño y mediano negocio, hasta proyectos de gran escala.
             </p>
           </div>
         </section>
 
-        {/* Clientes */}
+        {/* ✅ Clientes (con imágenes locales + carrusel React) */}
         <section
           id="clients"
           className="clients section"
@@ -398,45 +447,54 @@ export default function App() {
             <h2 className="clients__eyebrow">Clientes</h2>
             <h3 className="clients__title">Marcas que confían en nosotros</h3>
 
-            <div className="clients__carousel" data-carousel>
-              <div className="clients__track track">
-                <div className="clients__slide slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1600&auto=format&fit=crop"
-                    alt="Evento con audiencia"
-                    className="clients__image"
-                  />
-                  <div className="clients__caption">
-                    Lanzamiento de producto · Estrategia 360
+            <div
+              className="clients__carousel"
+              onMouseEnter={() => setPauseAuto(true)}
+              onMouseLeave={() => setPauseAuto(false)}
+            >
+              <div
+                className="clients__track"
+                style={{ transform: `translateX(-${clientIndex * 100}%)` }}
+              >
+                {clientSlides.map((s, i) => (
+                  <div className="clients__slide" key={i}>
+                    <img src={s.src} alt={s.alt} className="clients__image" />
+                    <div className="clients__caption">{s.caption}</div>
                   </div>
-                </div>
-
-                <div className="clients__slide slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1487017902120-903e88373554?q=80&w=1600&auto=format&fit=crop"
-                    alt="Oficina creativa"
-                    className="clients__image"
-                  />
-                  <div className="clients__caption">Rebranding completo · Kit de marca</div>
-                </div>
-
-                <div className="clients__slide slide">
-                  <img
-                    src="https://images.unsplash.com/photo-1485451456034-3f9391c6f219?q=80&w=1600&auto=format&fit=crop"
-                    alt="Personas colaborando"
-                    className="clients__image"
-                  />
-                  <div className="clients__caption">Campaña digital · 4.2x ROAS</div>
-                </div>
+                ))}
               </div>
 
-              <div className="clients__ctrl ctrl">
-                <button className="clients__prev">◀</button>
-                <button className="clients__next">▶</button>
+              <div className="clients__ctrl">
+                <button
+                  className="clients__prev"
+                  type="button"
+                  aria-label="Anterior"
+                  onClick={() => goClient(clientIndex - 1)}
+                >
+                  ◀
+                </button>
+                <button
+                  className="clients__next"
+                  type="button"
+                  aria-label="Siguiente"
+                  onClick={() => goClient(clientIndex + 1)}
+                >
+                  ▶
+                </button>
               </div>
             </div>
 
-            <div className="clients__dots dots"></div>
+            <div className="clients__dots">
+              {clientSlides.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  className={`clients__dot ${i === clientIndex ? "is-active" : ""}`}
+                  aria-label={`Ir a slide ${i + 1}`}
+                  onClick={() => goClient(i)}
+                />
+              ))}
+            </div>
           </div>
         </section>
 
@@ -449,7 +507,9 @@ export default function App() {
           <div className="contact__container">
             <div className="contact__form-wrapper">
               <h2 className="contact__eyebrow">Contacto</h2>
-              <h3 className="contact__title">Hagamos algo que valga la pena contar.</h3>
+              <h3 className="contact__title">
+                Hagamos algo que valga la pena contar.
+              </h3>
 
               <form id="contactForm" className="contact__form">
                 <label htmlFor="name" className="contact__label">

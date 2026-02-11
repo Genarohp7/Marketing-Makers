@@ -294,9 +294,14 @@ img {
 ========================== */
 .clients__carousel {
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 16px;
   box-shadow: var(--shadow);
   position: relative;
+
+  /* marco más “de tarjeta”, no banner */
+  max-width: 360px;
+  margin: 0 auto;
+  background: var(--white);
 }
 
 .clients__track {
@@ -307,43 +312,70 @@ img {
 .clients__slide {
   min-width: 100%;
   position: relative;
+
+  /* centra el contenido del slide */
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
 }
 
+/* Contenedor cuadrado real para la imagen */
 .clients__image {
-  width: 100%;
-  height: 300px;
-  object-fit: cover;
+  width: min(520px, 92%);
+  aspect-ratio: 1 / 1; /* ✅ cuadrado */
+  height: auto;
+
+  object-fit: contain; /* ✅ no recorta, no deforma */
+  object-position: center;
+
+  background: var(--white);
+  border-radius: 14px;
 }
 
+/* Caption menos invasivo */
 .clients__caption {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 0.8rem;
-  background: rgba(0, 0, 0, 0.6);
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+
+  background: rgba(17, 17, 17, 0.72);
   color: var(--white);
-  font-weight: 600;
+  font-weight: 700;
+  backdrop-filter: blur(6px);
 }
 
+/* Botones: centrados al marco */
 .clients__ctrl {
   position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
+  top: 70%;
+  left: -1px;
+  right: -1px;
   display: flex;
   justify-content: space-between;
   transform: translateY(-50%);
+  pointer-events: none;
 }
 
 .clients__prev,
 .clients__next {
-  background: var(--white);
+  pointer-events: auto;
+  background: rgba(255, 255, 255, 0.92);
   border: none;
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+  border-radius: 999px;
+  width: 44px;
+  height: 44px;
   cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.18);
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+.clients__prev:hover,
+.clients__next:hover {
+  transform: scale(1.06);
+  filter: brightness(0.98);
 }
 
 .clients__dots {
@@ -503,8 +535,24 @@ img {
     grid-template-columns: 1fr;
   }
 
+  /* ✅ NUEVO: carrusel a full en móvil + altura controlada */
+ .clients__carousel {
+    max-width: 100%;
+    border-radius: 14px;
+  }
+
+  .clients__slide {
+    padding: 1rem;
+  }
+
   .clients__image {
-    height: 200px;
+    width: min(360px, 92%);
+  }
+
+  .clients__caption {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
   }
 }
 
